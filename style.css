@@ -38,10 +38,17 @@ body {
   transition: background 0.3s;
 }
 
+.header{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 h1 {
   text-align: center;
   color: var(--text);
   margin-bottom: 1.2rem;
+  display: inline-block;
 }
 
 .input-row {
@@ -84,7 +91,7 @@ input[type="text"]:focus {
 .theme-btn {
   width: 2.5rem;
   height: 2.5rem;
-  border-radius: 50%;
+  border-radius: 100%;
   background: var(--text);
   border: none;
   cursor: pointer;
@@ -150,7 +157,6 @@ li.completed span {
 
   .add-btn,
   .theme-btn {
-    width: 100%;
     padding: 0.8rem;
     font-size: 1rem;
   }

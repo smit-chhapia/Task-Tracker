@@ -13,6 +13,12 @@ const h3 = document.querySelector('h3');
 
 let achivemet = 0;
 
+function updateProgressBar(){
+  achivemet = tasks.length === 0 ? 0 : (completedTasks.length / tasks.length) * 100;
+  span.innerText = `${Math.round(achivemet)}%`;
+  progressBar.style.setProperty('--progress', achivemet);
+}
+
 addButton.addEventListener('click', addTask);
 input.addEventListener('keypress', (e) => e.key === 'Enter' && addTask());
 
@@ -25,6 +31,14 @@ themeButton.addEventListener('click', () => {
 function addTask() {
   const text = input.value.trim();
   if (!text) return;
+
+  if (tasks.length != 0) {
+    if(tasks.indexOf(text) >= 0){
+      alert("Alredy added!");
+      input.value = "";
+      return;
+    }
+  }
 
   const li = document.createElement('li');
   li.innerHTML = `
@@ -45,7 +59,7 @@ function addTask() {
   checkbox.addEventListener('change', () => {
   li.classList.toggle('completed', checkbox.checked);
 
-  const taskText = li.innerText;
+  const taskText = text;
 
   if (checkbox.checked) {
     if (!completedTasks.includes(taskText)) {
@@ -55,23 +69,24 @@ function addTask() {
     completedTasks = completedTasks.filter(item => item !== taskText);
   }
 
-  achivemet = tasks.length === 0 ? 0 : (completedTasks.length / tasks.length) * 100;
-  span.innerText = `${Math.round(achivemet)}%`;
-  progressBar.style.setProperty('--progress', achivemet);
+  updateProgressBar();
   });
 
 
   li.querySelector('.delete-btn').addEventListener('click', (e) => {
-    let dtask = li.innerText;
+    let dtask = text;
+
     tasks = tasks.filter(item => item != dtask);
     completedTasks = completedTasks.filter(item => item !== dtask);
+
     li.remove();
+    updateProgressBar();
   });
 
   taskList.appendChild(li);
   input.value = '';
   input.focus();
 
-  tasks.push(li.innerText);
+  tasks.push(text);
 
 }

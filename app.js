@@ -88,5 +88,5 @@ function addTask() {
   input.focus();
 
   tasks.push(text);
-
+  updateProgressBar();
 }
